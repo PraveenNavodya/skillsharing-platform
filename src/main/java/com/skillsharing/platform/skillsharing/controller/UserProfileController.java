@@ -24,14 +24,14 @@ public class UserProfileController {
         return userProfileService.getUserProfile(id);
     }
 
-    @PutMapping("/update")
-    public String updateUserProfile(@RequestBody UserProfile userProfile) throws ExecutionException, InterruptedException {
-        return userProfileService.updateUserProfile(userProfile);
+    @PutMapping("/update/{id}")
+    public String updateUserProfile(@PathVariable String id, @RequestBody UserProfile userProfile) throws ExecutionException, InterruptedException {
+        return userProfileService.updateUserProfile(id, userProfile);
     }
+    
 
     @DeleteMapping("/delete/{id}")
     public String deleteUserProfile(@PathVariable String id) throws ExecutionException, InterruptedException {
         return userProfileService.deleteUserProfile(id);
     }
-    
 }

@@ -32,7 +32,8 @@ public class UserProfileService {
         }
     }
 
-    public String updateUserProfile(UserProfile userProfile) throws ExecutionException, InterruptedException {
+    public String updateUserProfile(String id, UserProfile userProfile) throws ExecutionException, InterruptedException
+    {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> future = dbFirestore.collection(COLLECTION_NAME)
                 .document(userProfile.getId())
