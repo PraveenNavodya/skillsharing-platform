@@ -13,39 +13,36 @@ public class UserProfileService {
 
     private static final String COLLECTION_NAME = "users";
 
-    public String createUserProfile(UserProfile userProfile) throws ExecutionException, InterruptedException {
+    // Now accepts UID instead of using userProfile.getId()
+    public String createUserProfile(String uid, UserProfile userProfile) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
+        userProfile.setId(uid);  // Ensure ID is set to UID
         ApiFuture<WriteResult> future = dbFirestore.collection(COLLECTION_NAME)
-                .document(userProfile.getId())
+                .document(uid)
                 .set(userProfile);
         return "✅ User Profile created at: " + future.get().getUpdateTime();
     }
 
-    public UserProfile getUserProfile(String id) throws ExecutionException, InterruptedException {
+    public UserProfile getUserProfile(String uid) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(id);
-        DocumentSnapshot document = documentReference.get().get();
-        if (document.exists()) {
-            return document.toObject(UserProfile.class);
-        } else {
-            return null;
-        }
+        DocumentReference docRef = dbFirestore.collection(COLLECTION_NAME).document(uid);
+        DocumentSnapshot snapshot = docRef.get().get();
+        return snapshot.exists() ? snapshot.toObject(UserProfile.class) : null;
     }
 
-    public String updateUserProfile(String id, UserProfile userProfile) throws ExecutionException, InterruptedException
-    {
+    public String updateUserProfile(String uid, UserProfile userProfile) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
+        userProfile.setId(uid);  // Update the ID to match UID
         ApiFuture<WriteResult> future = dbFirestore.collection(COLLECTION_NAME)
-                .document(userProfile.getId())
-                .set(userProfile); // set() will overwrite
+                .document(uid)
+                .set(userProfile);
         return "✅ User Profile updated at: " + future.get().getUpdateTime();
     }
 
-    public String deleteUserProfile(String id) throws ExecutionException, InterruptedException {
+    public String deleteUserProfile(String uid) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> future = dbFirestore.collection(COLLECTION_NAME).document(id).delete();
-        future.get(); 
+        ApiFuture<WriteResult> future = dbFirestore.collection(COLLECTION_NAME).document(uid).delete();
+        future.get();
         return "✅ User Profile deleted successfully!";
     }
-    
 }
