@@ -65,8 +65,8 @@ function UserProfilePage() {
         </div>
       ) : (
         <div>
-          <p>No profile found.</p>
-          <button onClick={handleCreate}>Create Profile</button>
+           <p>No profile details found.</p>
+           <button onClick={handleCreate}>Add Details</button>
         </div>
       )}
     </div>

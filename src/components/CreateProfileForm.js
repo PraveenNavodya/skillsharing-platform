@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import '../styles/FormStyles.css';  // ✅ correct if CSS is in src/styles
 
 function CreateProfileForm() {
   const [form, setForm] = useState({
@@ -23,7 +24,7 @@ function CreateProfileForm() {
       if (!user) return;
 
       const token = await user.getIdToken();
-      const res = await fetch(`http://localhost:8081/api/user/${user.uid}`, {
+      const res = await fetch("http://localhost:8081/api/user/me", {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -33,6 +34,9 @@ function CreateProfileForm() {
           setProfileExists(true);
         }
       }
+
+      // Set email in form
+      setForm((prev) => ({ ...prev, email: user.email }));
     };
 
     checkExistingProfile();
@@ -57,15 +61,14 @@ function CreateProfileForm() {
       },
       body: JSON.stringify(form)
     });
-    
+
     if (res.ok) {
       alert("✅ Profile created!");
       navigate('/profile');
     } else {
-      const text = await res.text(); // Not res.json()!
+      const text = await res.text();
       alert("❌ Failed to create profile: " + text);
     }
-    
   };
 
   if (profileExists) {
@@ -81,15 +84,19 @@ function CreateProfileForm() {
     <div className="form-container">
       <h2>Create Profile</h2>
       <form onSubmit={handleSubmit}>
-        {Object.keys(form).map((key) => (
-          <input
-            key={key}
-            name={key}
-            placeholder={key}
-            value={form[key]}
-            onChange={handleChange}
-            className="form-field"
-          />
+        {Object.entries(form).map(([key, value]) => (
+          <div key={key} className="form-field">
+            <label htmlFor={key}>{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+            <input
+              id={key}
+              name={key}
+              type="text"
+              placeholder={key}
+              value={value}
+              onChange={handleChange}
+              readOnly={key === 'email'}
+            />
+          </div>
         ))}
         <button type="submit" className="form-button">Create Profile</button>
       </form>

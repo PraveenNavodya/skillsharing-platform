@@ -1,0 +1,8 @@
+.login-wrapper {
+    height: 100vh; /* full screen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  

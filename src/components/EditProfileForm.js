@@ -1,6 +1,8 @@
+// src/components/EditProfileForm.js
 import React, { useState, useEffect } from 'react';
 import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import '../styles/FormStyles.css'; // if not already included
 
 function EditProfileForm() {
   const [form, setForm] = useState({
@@ -9,8 +11,7 @@ function EditProfileForm() {
     bio: '',
     country: '',
     gender: '',
-    language: '',
-    profilePictureUrl: ''
+    language: ''
   });
 
   const navigate = useNavigate();
@@ -28,7 +29,15 @@ function EditProfileForm() {
 
       if (res.ok) {
         const data = await res.json();
-        setForm(data);
+        const cleaned = {
+          fullName: data.fullName || '',
+          email: data.email || '',
+          bio: data.bio || '',
+          country: data.country || '',
+          gender: data.gender || '',
+          language: data.language || ''
+        };
+        setForm(cleaned);
       } else {
         alert("❌ Failed to fetch profile.");
       }
@@ -69,16 +78,31 @@ function EditProfileForm() {
     <div className="form-container">
       <h2>Edit Profile</h2>
       <form onSubmit={handleSubmit}>
-        {Object.keys(form).map((key) => (
-          <input
-            key={key}
-            name={key}
-            placeholder={key}
-            value={form[key]}
-            onChange={handleChange}
-            className="form-field"
-          />
-        ))}
+        <div className="form-field">
+          <label>Full Name:</label>
+          <input name="fullName" value={form.fullName} onChange={handleChange} />
+        </div>
+        <div className="form-field">
+          <label>Email:</label>
+          <input name="email" value={form.email} readOnly />
+        </div>
+        <div className="form-field">
+          <label>Bio:</label>
+          <input name="bio" value={form.bio} onChange={handleChange} />
+        </div>
+        <div className="form-field">
+          <label>Country:</label>
+          <input name="country" value={form.country} onChange={handleChange} />
+        </div>
+        <div className="form-field">
+          <label>Gender:</label>
+          <input name="gender" value={form.gender} onChange={handleChange} />
+        </div>
+        <div className="form-field">
+          <label>Language:</label>
+          <input name="language" value={form.language} onChange={handleChange} />
+        </div>
+
         <button type="submit" className="form-button">Save Changes</button>
       </form>
     </div>

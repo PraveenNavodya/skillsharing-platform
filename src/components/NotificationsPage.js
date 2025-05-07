@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './FormStyles.css';
+import '../styles/FormStyles.css';  // ✅ correct if CSS is in src/styles
+
 
 function NotificationsPage({ userId }) {
   const [notifications, setNotifications] = useState([]);
