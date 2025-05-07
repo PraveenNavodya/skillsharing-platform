@@ -1,0 +1,47 @@
+.main-page-container {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-info {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  
+  .button-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  
+  .button-column button {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .button-column button:hover {
+    background-color: #125ea4;
+  }
+  
+  .logout {
+    background-color: #e53935;
+  }
+  
+  .logout:hover {
+    background-color: #c62828;
+  }
+  
