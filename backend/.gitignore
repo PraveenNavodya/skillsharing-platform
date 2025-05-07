@@ -1,8 +1,5 @@
-# === Common IDE and Build Files ===
-
 HELP.md
 target/
-build/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -17,7 +14,7 @@ build/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea/
+.idea
 *.iws
 *.iml
 *.ipr
@@ -28,18 +25,9 @@ build/
 /dist/
 /nbdist/
 /.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### VS Code ###
 .vscode/
-
-# === Spring Boot Backend ===
-src/main/resources/*.json
-
-# === React Frontend ===
-node_modules/
-frontend/build/
-.env
-
-# Allow target/build folders in source trees if needed
-!**/src/main/**/build/
-!**/src/test/**/build/
